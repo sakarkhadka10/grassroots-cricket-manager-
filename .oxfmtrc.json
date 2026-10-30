@@ -1,0 +1,13 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "semi": true,
+  "singleQuote": false,
+  "tabWidth": 2,
+  "printWidth": 120,
+  "trailingComma": "all",
+  "sortTailwindcss": {
+    "stylesheet": "src/styles/globals.css",
+    "functions": ["clsx", "cn"]
+  },
+  "ignorePatterns": [".next/**", "out/**", "build/**", "coverage/**", "next-env.d.ts"]
+}

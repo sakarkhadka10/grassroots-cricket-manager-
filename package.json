@@ -1,11 +1,16 @@
 {
-  "name": "interview-questions",
+  "name": "grassroots-cricket-manager",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check",
+    "prepare": "husky"
   },
   "dependencies": {
     "next": "16.4.3",
@@ -18,8 +23,19 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "babel-plugin-react-compiler": "1.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.0",
+    "oxfmt": "^0.75.0",
+    "oxlint": "^1.90.0",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,cjs,mts,cts}": [
+      "oxlint --fix",
+      "oxfmt"
+    ],
+    "*.{json,jsonc,css,md,mdx,yml,yaml,html}": "oxfmt --no-error-on-unmatched-pattern"
   },
   "packageManager": "pnpm@12.15.0"
 }
