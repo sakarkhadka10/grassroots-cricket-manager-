@@ -7,7 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import { db } from "@/db";
-import { playersTable } from "@/db/schema";
+import { playersTable, teamsTable } from "@/db/schema";
+import { getMatchCount } from "@/lib/matches/queries";
 import { requireAdmin } from "@/lib/auth/session";
 import { userRoleLabels } from "@/lib/auth/validation";
 import { cn } from "cn";
@@ -19,9 +20,17 @@ export default async function DashboardPage() {
   const firstName = user.name.split(" ")[0];
 
   const [{ value: playerCount }] = await db.select({ value: count() }).from(playersTable);
+  const [{ value: teamCount }] = await db.select({ value: count() }).from(teamsTable);
+  const matchCount = await getMatchCount();
 
   const stats = [
-    { label: "Teams", value: "—", hint: "Set up squads", icon: UsersRound, href: "/dashboard/teams" },
+    {
+      label: "Teams",
+      value: String(teamCount),
+      hint: "Set up squads",
+      icon: UsersRound,
+      href: "/dashboard/teams",
+    },
     {
       label: "Players",
       value: String(playerCount),
@@ -29,8 +38,14 @@ export default async function DashboardPage() {
       icon: Users,
       href: "/dashboard/players",
     },
-    { label: "Matches", value: "—", hint: "Fixtures & results", icon: Activity, href: "/dashboard/matches" },
-    { label: "Top impact", value: "—", hint: "Leaderboard", icon: Trophy, href: "/dashboard/leaderboard" },
+    {
+      label: "Matches",
+      value: String(matchCount),
+      hint: "Fixtures & results",
+      icon: Activity,
+      href: "/dashboard/matches",
+    },
+    { label: "Top impact", value: "Live", hint: "Leaderboard", icon: Trophy, href: "/dashboard/leaderboard" },
   ];
 
   const quickLinks = [
