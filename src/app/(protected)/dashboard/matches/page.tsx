@@ -1,10 +1,9 @@
 import { PageHeader } from "@/components/dashboard/page-header";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { requireAdmin } from "@/lib/auth/session";
+
+export const instant = false;
 
 export default async function MatchesPage() {
-  await requireAdmin();
-
   return (
     <div className="mx-auto w-full max-w-6xl space-y-6">
       <PageHeader title="Matches" description="Record fixtures, results, and individual performances." />

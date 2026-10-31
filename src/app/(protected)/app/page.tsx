@@ -1,9 +1,22 @@
+import { redirect } from "next/navigation";
+
+import { auth } from "@/auth";
 import { Badge } from "@/components/ui/badge";
-import { requireUser } from "@/lib/auth/session";
 import { userRoleLabels } from "@/lib/auth/validation";
 
+export const instant = false;
+
 export default async function UserAppPage() {
-  const user = await requireUser();
+  const session = await auth();
+
+  if (!session?.user?.id) {
+    redirect("/login");
+  }
+
+  const user = {
+    name: session.user.name ?? "",
+    email: session.user.email ?? "",
+  };
 
   return (
     <main className="mx-auto flex max-w-lg flex-1 flex-col items-center justify-center px-4 py-16 text-center">

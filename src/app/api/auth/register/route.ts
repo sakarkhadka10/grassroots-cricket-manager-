@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 import { signIn } from "@/auth";
 import { db } from "@/db";
-import { users } from "@/db/schema";
+import { usersTable } from "@/db/schema";
 import { hashPassword } from "@/lib/auth/password";
 import { registerSchema } from "@/lib/auth/validation";
 
@@ -24,7 +24,11 @@ export async function POST(request: Request) {
 
     const { name, email, password, role } = parsed.data;
 
-    const [existingUser] = await db.select({ id: users.id }).from(users).where(eq(users.email, email)).limit(1);
+    const [existingUser] = await db
+      .select({ id: usersTable.id })
+      .from(usersTable)
+      .where(eq(usersTable.email, email))
+      .limit(1);
 
     if (existingUser) {
       return NextResponse.json({ error: "Email is already registered" }, { status: 409 });
@@ -33,7 +37,7 @@ export async function POST(request: Request) {
     const passwordHash = await hashPassword(password);
 
     const [user] = await db
-      .insert(users)
+      .insert(usersTable)
       .values({
         name,
         email,
@@ -41,10 +45,10 @@ export async function POST(request: Request) {
         role,
       })
       .returning({
-        id: users.id,
-        name: users.name,
-        email: users.email,
-        role: users.role,
+        id: usersTable.id,
+        name: usersTable.name,
+        email: usersTable.email,
+        role: usersTable.role,
       });
 
     const signInResult = await signIn("credentials", {

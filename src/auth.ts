@@ -3,7 +3,7 @@ import Credentials from "next-auth/providers/credentials";
 import { eq } from "drizzle-orm";
 
 import { db } from "@/db";
-import { users } from "@/db/schema";
+import { usersTable } from "@/db/schema";
 import { verifyPassword } from "@/lib/auth/password";
 import { loginSchema } from "@/lib/auth/validation";
 
@@ -43,7 +43,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         const { email, password } = parsed.data;
 
-        const [user] = await db.select().from(users).where(eq(users.email, email)).limit(1);
+        const [user] = await db.select().from(usersTable).where(eq(usersTable.email, email)).limit(1);
 
         if (!user) {
           return null;

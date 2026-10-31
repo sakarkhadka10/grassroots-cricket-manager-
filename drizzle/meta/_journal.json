@@ -8,6 +8,13 @@
       "when": 1793394984522,
       "tag": "0000_flaky_elektra",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1793414809782,
+      "tag": "0001_adorable_nitro",
+      "breakpoints": true
     }
   ]
 }

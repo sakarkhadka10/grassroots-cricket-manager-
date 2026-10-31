@@ -1,3 +1,4 @@
+import { count } from "drizzle-orm";
 import { Activity, ArrowUpRight, Trophy, Users, UsersRound } from "lucide-react";
 import Link from "next/link";
 
@@ -5,31 +6,43 @@ import { PageHeader } from "@/components/dashboard/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
+import { db } from "@/db";
+import { playersTable } from "@/db/schema";
 import { requireAdmin } from "@/lib/auth/session";
 import { userRoleLabels } from "@/lib/auth/validation";
 import { cn } from "cn";
+
+export const instant = false;
 
 export default async function DashboardPage() {
   const user = await requireAdmin();
   const firstName = user.name.split(" ")[0];
 
+  const [{ value: playerCount }] = await db.select({ value: count() }).from(playersTable);
+
   const stats = [
     { label: "Teams", value: "—", hint: "Set up squads", icon: UsersRound, href: "/dashboard/teams" },
-    { label: "Players", value: "—", hint: "Roster & stats", icon: Users, href: "/dashboard/players" },
+    {
+      label: "Players",
+      value: String(playerCount),
+      hint: "Roster & stats",
+      icon: Users,
+      href: "/dashboard/players",
+    },
     { label: "Matches", value: "—", hint: "Fixtures & results", icon: Activity, href: "/dashboard/matches" },
     { label: "Top impact", value: "—", hint: "Leaderboard", icon: Trophy, href: "/dashboard/leaderboard" },
   ];
 
   const quickLinks = [
     {
+      title: "Players",
+      description: "Add players and manage stats.",
+      href: "/dashboard/players",
+    },
+    {
       title: "Teams",
       description: "Create teams and assign players.",
       href: "/dashboard/teams",
-    },
-    {
-      title: "Players",
-      description: "Manage profiles and performance data.",
-      href: "/dashboard/players",
     },
     {
       title: "Matches",
