@@ -1,5 +1,6 @@
-import type { Player } from "@/db/schema";
+import { calculateImpactScore } from "@/lib/cricket/impact-score";
 import { playerRoles } from "@/lib/validations/player";
+import type { ImpactPlayer } from "@/types/player.types";
 
 export const playerRoleLabels: Record<(typeof playerRoles)[number], string> = {
   BATSMAN: "Batsman",
@@ -17,9 +18,6 @@ export function formatBasePrice(value: string | number) {
   }).format(Number.isFinite(amount) ? amount : 0);
 }
 
-export function playerImpactScore(player: Pick<Player, "totalRuns" | "totalWickets" | "matchesPlayed">) {
-  if (player.matchesPlayed === 0) {
-    return 0;
-  }
-  return Math.round((player.totalRuns + player.totalWickets * 25) / player.matchesPlayed);
+export function playerImpactScore(player: ImpactPlayer) {
+  return calculateImpactScore(player);
 }

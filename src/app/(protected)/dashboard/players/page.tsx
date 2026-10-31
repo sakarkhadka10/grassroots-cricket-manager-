@@ -1,4 +1,5 @@
 import { desc } from "drizzle-orm";
+import Link from "next/link";
 
 import { AddPlayerForm } from "@/components/players/add-player-form";
 import { PlayerRosterTable } from "@/components/players/player-roster-table";
@@ -31,7 +32,14 @@ export default async function PlayersPage() {
           <div className="space-y-1.5">
             <CardTitle>Roster</CardTitle>
             <CardDescription>
-              {players.length} player{players.length === 1 ? "" : "s"} · impact = (runs + 25× wickets) ÷ matches
+              {players.length} player{players.length === 1 ? "" : "s"} · impact scores match the{" "}
+              <Link
+                href="/dashboard/leaderboard"
+                className="font-medium text-foreground underline-offset-4 hover:underline"
+              >
+                leaderboard
+              </Link>{" "}
+              formula
             </CardDescription>
           </div>
         </CardHeader>

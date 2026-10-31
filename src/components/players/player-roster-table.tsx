@@ -4,6 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 import { PlayerDeleteButton } from "@/components/players/player-delete-button";
 import { Badge } from "@/components/ui/badge";
 import type { Player } from "@/db/schema";
+import { formatImpactScore } from "@/lib/cricket/impact-score";
 import { formatBasePrice, playerImpactScore, playerRoleLabels } from "@/lib/players/labels";
 
 type PlayerRosterTableProps = {
@@ -56,7 +57,9 @@ export function PlayerRosterTable({ players }: PlayerRosterTableProps) {
               <td className="px-4 py-3 text-right tabular-nums">{player.matchesPlayed}</td>
               <td className="px-4 py-3 text-right tabular-nums">{player.totalRuns}</td>
               <td className="px-4 py-3 text-right tabular-nums">{player.totalWickets}</td>
-              <td className="px-4 py-3 text-right font-medium tabular-nums">{playerImpactScore(player)}</td>
+              <td className="px-4 py-3 text-right font-medium tabular-nums">
+                {formatImpactScore(playerImpactScore(player))}
+              </td>
               <td className="px-4 py-3">
                 <div className="flex items-center justify-end gap-1">
                   <PlayerDeleteButton playerId={player.id} playerName={player.name} />

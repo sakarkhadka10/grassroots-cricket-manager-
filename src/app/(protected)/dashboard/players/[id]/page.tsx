@@ -10,6 +10,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { db } from "@/db";
 import { playersTable } from "@/db/schema";
+import { formatImpactScore } from "@/lib/cricket/impact-score";
 import { formatBasePrice, playerImpactScore, playerRoleLabels } from "@/lib/players/labels";
 import { cn } from "cn";
 
@@ -47,7 +48,7 @@ export default async function PlayerPage({ params }: PlayerPageProps) {
 
       <PageHeader
         title={player.name}
-        description={`${playerRoleLabels[player.role]} · joined ${player.createdAt.toLocaleDateString()} · impact score ${impact}`}
+        description={`${playerRoleLabels[player.role]} · joined ${player.createdAt.toLocaleDateString()} · impact ${formatImpactScore(impact)}`}
       />
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
