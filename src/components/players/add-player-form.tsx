@@ -48,14 +48,14 @@ export function AddPlayerForm() {
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <Field>
-            <FieldLabel htmlFor="basePrice">Base price (INR)</FieldLabel>
+            <FieldLabel htmlFor="basePrice">Auction base (NPR)</FieldLabel>
             <Input
               id="basePrice"
               name="basePrice"
               type="number"
               min={0}
               step="0.01"
-              placeholder="500000"
+              placeholder="1500000"
               required
               className="tabular-nums"
             />
