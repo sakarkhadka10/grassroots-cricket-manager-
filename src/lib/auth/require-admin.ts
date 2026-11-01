@@ -8,19 +8,39 @@ import { usersTable } from "@/db/schema";
 
 export async function getAdmin() {
   const session = await auth();
-  const userId = session?.user?.id;
 
-  if (!userId) {
+  if (!session?.user?.id && !session?.user?.email) {
     return { status: 401 as const };
   }
-  const [user] = await db
-    .select({
-      id: usersTable.id,
-      role: usersTable.role,
-    })
-    .from(usersTable)
-    .where(eq(usersTable.id, userId))
-    .limit(1);
+
+  let user:
+    | {
+        id: string;
+        role: (typeof usersTable.$inferSelect)["role"];
+      }
+    | undefined;
+
+  if (session.user.id) {
+    [user] = await db
+      .select({
+        id: usersTable.id,
+        role: usersTable.role,
+      })
+      .from(usersTable)
+      .where(eq(usersTable.id, session.user.id))
+      .limit(1);
+  }
+
+  if (!user && session.user.email) {
+    [user] = await db
+      .select({
+        id: usersTable.id,
+        role: usersTable.role,
+      })
+      .from(usersTable)
+      .where(eq(usersTable.email, session.user.email))
+      .limit(1);
+  }
 
   if (!user) {
     return { status: 401 as const };

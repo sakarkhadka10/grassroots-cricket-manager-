@@ -15,6 +15,13 @@ export type TeamActionState = {
 export async function createTeamAction(_previousState: TeamActionState, formData: FormData): Promise<TeamActionState> {
   const admin = await getAdmin();
 
+  if (admin.status === 401) {
+    return {
+      success: false,
+      message: "Session expired. Sign out and sign in again.",
+    };
+  }
+
   if (admin.status !== 200) {
     return {
       success: false,
