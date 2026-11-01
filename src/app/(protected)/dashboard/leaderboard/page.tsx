@@ -1,22 +1,19 @@
+import { LeaderboardView } from "@/components/leaderboard/leaderboard-view";
 import { PageHeader } from "@/components/dashboard/page-header";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { requireAdmin } from "@/lib/auth/session";
+import { getLeaderboard } from "@/lib/cricket/leaderboard";
+
+export const instant = false;
 
 export default async function LeaderboardPage() {
-  await requireAdmin();
+  const entries = await getLeaderboard();
 
   return (
     <div className="mx-auto w-full max-w-6xl space-y-6">
-      <PageHeader title="Leaderboard" description="Rank players by impact and consistency." />
-      <Card>
-        <CardHeader>
-          <CardTitle>Impact rankings</CardTitle>
-          <CardDescription>Leaderboard scoring will appear here.</CardDescription>
-        </CardHeader>
-        <CardContent className="text-sm leading-relaxed text-muted-foreground">
-          Compare players using your custom impact formula across the season.
-        </CardContent>
-      </Card>
+      <PageHeader
+        title="Impact leaderboard"
+        description="Live rankings from player statistics using the Criico Arena impact score formula."
+      />
+      <LeaderboardView entries={entries} />
     </div>
   );
 }

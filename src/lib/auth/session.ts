@@ -9,7 +9,7 @@ export async function getCurrentUser() {
   await connection();
   const session = await auth();
 
-  if (!session?.user?.id) {
+  if (!session?.user?.id && !session?.user?.email) {
     return null;
   }
 
