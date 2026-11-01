@@ -51,6 +51,7 @@ export async function createPlayerAction(
       basePrice: parsed.data.basePrice.toFixed(2),
     });
     revalidatePath("/dashboard/players");
+    revalidatePath("/dashboard/leaderboard");
     revalidatePath("/dashboard");
     return {
       success: true,
@@ -115,6 +116,7 @@ export async function updatePlayerAction(
 
     revalidatePath("/dashboard/players");
     revalidatePath(`/dashboard/players/${idParsed.data}`);
+    revalidatePath("/dashboard/leaderboard");
     revalidatePath("/dashboard");
     return { success: true, message: "" };
   } catch {
@@ -148,6 +150,7 @@ export async function deletePlayerAction(playerId: string): Promise<PlayerAction
     }
 
     revalidatePath("/dashboard/players");
+    revalidatePath("/dashboard/leaderboard");
     revalidatePath("/dashboard");
     return { success: true, message: "Player removed from roster." };
   } catch {

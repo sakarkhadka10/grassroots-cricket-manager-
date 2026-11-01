@@ -10,8 +10,8 @@ export default async function LeaderboardPage() {
   return (
     <div className="mx-auto w-full max-w-6xl space-y-6">
       <PageHeader
-        title="Leaderboard"
-        description="Rankings use role-weighted impact scoring with experience adjustments for matches played."
+        title="Impact leaderboard"
+        description="Live rankings from player statistics using the Criico Arena impact score formula."
       />
       <LeaderboardView entries={entries} />
     </div>
