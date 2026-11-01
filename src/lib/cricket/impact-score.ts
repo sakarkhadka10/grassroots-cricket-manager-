@@ -35,7 +35,6 @@ export function calculateImpactScore(player: ImpactPlayer): number {
     impactScore += 30;
   }
 
-  // Experience: under 5 matches (−50), over 20 (+100); exactly 5 or 20 unchanged.
   if (matchesPlayed < 5) {
     impactScore -= 50;
   } else if (matchesPlayed > 20) {

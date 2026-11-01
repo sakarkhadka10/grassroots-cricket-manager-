@@ -11,10 +11,10 @@ export const playerRoleLabels: Record<(typeof playerRoles)[number], string> = {
 
 export function formatBasePrice(value: string | number) {
   const amount = typeof value === "string" ? Number(value) : value;
-  return new Intl.NumberFormat("en-IN", {
+  return new Intl.NumberFormat("en-NP", {
     style: "currency",
-    currency: "INR",
-    maximumFractionDigits: 2,
+    currency: "NPR",
+    maximumFractionDigits: 0,
   }).format(Number.isFinite(amount) ? amount : 0);
 }
 

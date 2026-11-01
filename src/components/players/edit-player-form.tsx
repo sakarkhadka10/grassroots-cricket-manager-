@@ -54,7 +54,7 @@ export function EditPlayerForm({ player }: EditPlayerFormProps) {
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <Field>
-            <FieldLabel htmlFor="basePrice">Base price (INR)</FieldLabel>
+            <FieldLabel htmlFor="basePrice">Auction base (NPR)</FieldLabel>
             <Input
               id="basePrice"
               name="basePrice"
